@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Product Details</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <style>
+      body {
+        font-family: Arial;
+        background: #f3f3f3;
+        margin: 0;
+      }
+
+      .product-container {
+        display: flex;
+        gap: 40px;
+        padding: 30px;
+        background: white;
+        margin: 30px;
+        border-radius: 10px;
+      }
+
+      .product-image img {
+        width: 350px;
+        height: 350px;
+        object-fit: contain;
+      }
+
+      .product-info {
+        flex: 1;
+      }
+
+      .product-info h2 {
+        margin-bottom: 10px;
+      }
+
+      .rating {
+        color: orange;
+        margin-bottom: 10px;
+      }
+
+      .price {
+        color: green;
+        font-size: 22px;
+        font-weight: bold;
+        margin: 10px 0;
+      }
+
+      .desc {
+        margin: 10px 0;
+        line-height: 1.5;
+      }
+
+      .sizes span {
+        border: 1px solid #ccc;
+        padding: 6px 12px;
+        margin-right: 8px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .sizes span:hover {
+        background: #eee;
+      }
+
+      .btn {
+        margin-top: 20px;
+        background: #ffd814;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 16px;
+      }
+
+      .btn:hover {
+        background: #f7ca00;
+      }
+
+      .back-btn {
+        margin: 20px;
+        padding: 8px 15px;
+        background: #232f3e;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .back-btn:hover {
+        background: #37475a;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+    <div class="product-container">
+      <div class="product-image">
+        <img id="pImage" />
+      </div>
+
+      <div class="product-info">
+        <h2 id="pTitle"></h2>
+        <div class="rating" id="pRating"></div>
+
+        <div class="price" id="pPrice"></div>
+
+        <p class="desc" id="pDesc"></p>
+
+        <h4>Select Size:</h4>
+        <div class="sizes" id="sizes">
+          <span>6</span>
+          <span>7</span>
+          <span>8</span>
+          <span>9</span>
+          <span>10</span>
+        </div>
+
+        <button class="btn" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <script>
+      // PRODUCT DATA
+      const products = {
+        1: {
+          title: "Running Shoes for Men",
+          price: "₹1209",
+          img: "Athco1209.jpg",
+          rating: "⭐⭐⭐⭐☆",
+          desc: "Lightweight running shoes designed for comfort and daily use. Breathable material with soft cushioning.",
+        },
+        2: {
+          title: "Boldfit Trekking Shoes",
+          price: "₹1999",
+          img: "Boldfit.jpg",
+          rating: "⭐⭐⭐⭐⭐",
+          desc: "Perfect trekking shoes with strong grip, durable sole, and water-resistant design.",
+        },
+        3: {
+          title: "Campus Fit Shoes",
+          price: "₹799",
+          img: "campus799.jpg",
+          rating: "⭐⭐⭐⭐☆",
+          desc: "Affordable and stylish shoes ideal for casual wear and college use.",
+        },
+        4: {
+          title: "SPARX Men's Sneaker",
+          price: "₹663",
+          img: "sneaker663.jpg",
+          rating: "⭐⭐⭐⭐⭐",
+          desc: "Trendy sneakers with modern design, comfortable fit, and everyday usability.",
+        },
+      };
+
+      // GET ID FROM URL
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      const product = products[id];
+
+      // SET DATA
+      document.getElementById("pImage").src = product.img;
+      document.getElementById("pTitle").innerText = product.title;
+      document.getElementById("pPrice").innerText = product.price;
+      document.getElementById("pRating").innerText = product.rating;
+      document.getElementById("pDesc").innerText = product.desc;
+
+
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

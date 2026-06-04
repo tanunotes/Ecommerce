@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      body {
+        font-family: Arial;
+        background: #f3f3f3;
+        margin: 0;
+      }
+
+      h2 {
+        padding: 20px;
+      }
+
+      .cart-container {
+        padding: 20px;
+      }
+
+      .cart-item {
+        display: flex;
+        gap: 20px;
+        background: white;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 8px;
+        align-items: center;
+      }
+
+      .cart-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+      }
+
+      #placeOrderBtn {
+        background: rgb(83, 198, 83);
+        color: white;
+        font-size: 16px;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 20px;
+      }
+
+      #placeOrderBtn:hover {
+        opacity: 0.9;
+      }
+
+      .details {
+        flex: 1;
+      }
+
+      .price {
+        color: green;
+        font-weight: bold;
+      }
+
+      .remove-btn {
+        background: red;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Your Cart 🛒</h2>
+
+    <div class="cart-container" id="cartContainer"></div>
+    <button id="placeOrderBtn">Place order</button>
+
+    <script>
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const container = document.getElementById("cartContainer");
+
+      function loadCart() {
+        container.innerHTML = "";
+
+        if (cart.length === 0) {
+          container.innerHTML = "<p style='padding:20px'>Cart is empty</p>";
+          return;
+        }
+
+        cart.forEach((item, index) => {
+          const div = document.createElement("div");
+          div.className = "cart-item";
+
+          div.innerHTML = `
+        <img src="${item.img}">
+        <div class="details">
+          <h4>${item.title}</h4>
+          <p>Size: ${item.size}</p>
+          <div class="price">${item.price}</div>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+      `;
+
+          container.appendChild(div);
+        });
+      }
+
+      function removeItem(index) {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+      }
+
+      const placeOrderBtn = document.getElementById("placeOrderBtn");
+      placeOrderBtn.addEventListener("click", () => {
+        if (cart.length == 0) {
+          alert("cart is empty");
+          return;
+        }
+        //previous orders
+        let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+        cart.forEach((item) => {
+          const orderItem = {
+            title: item.title,
+            price: item.price,
+            size: item.size,
+            img: item.img,
+
+            date: new Dtae().toLocalDateString(),
+          };
+
+          orders.push(orderItem);
+        });
+        localStorage.setItem("orders", JSON.stringify(orders));
+
+        cart = [];
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+        alert("order placed succesfully");
+      });
+      loadCart();
+    </script>
+  </body>
+</html>
