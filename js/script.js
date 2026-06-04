@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // CAROUSEL (SLIDER)
 
   const images = [
-    "shirt.jpg",
-    "phones.jpg",
-    "walld.jpg",
-    "wm.jpg",
-    "lights.jpg",
+    "Images/shirt.jpg",
+    "Images/phones.jpg",
+    "Images/walld.jpg",
+    "Images/wm.jpg",
+    "Images/lights.jpg",
   ];
 
   let index = 0;
