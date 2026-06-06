@@ -67,6 +67,27 @@
         cursor: pointer;
         border-radius: 5px;
       }
+
+      .quantity-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+      }
+
+     .quantity-box button {
+        width: 30px;
+        height: 30px;
+        border: none;
+        background: #ddd;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 5px;
+      }
+
+      .quantity-box span {
+        font-weight: bold;
+      }
     </style>
   </head>
 
@@ -97,6 +118,12 @@
         <div class="details">
           <h4>${item.title}</h4>
           <p>Size: ${item.size}</p>
+          <div class="quantity-box">
+            <button onclick="decreaseQuantity(${index})">-</button>
+            <span>${item.quantity || 1}</span>
+            <button onclick="increaseQuantity(${index})">+</button>
+
+          </div>
           <div class="price">${item.price}</div>
         </div>
         <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
@@ -111,7 +138,24 @@
         localStorage.setItem("cart", JSON.stringify(cart));
         loadCart();
       }
+       function increaseQuantity(index) {
+          cart[index].quantity++;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          loadCart();
+      }
+      
+      function decreaseQuantity(index) {
+        if (cart[index].quantity > 1) {
+          cart[index].quantity--;
+      } else {
+         cart.splice(index, 1);
+      }
 
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  loadCart();
+
+}
       const placeOrderBtn = document.getElementById("placeOrderBtn");
       placeOrderBtn.addEventListener("click", () => {
         if (cart.length == 0) {
@@ -127,7 +171,7 @@
             price: item.price,
             size: item.size,
             img: item.img,
-
+            quantity: item.quantity,
             date: new Date().toLocaleDateString(),
           };
 
