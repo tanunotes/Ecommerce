@@ -85,7 +85,6 @@ function openProduct(id) {
   window.location.href = "product.html?id=" + id;
 }
 
-// =======================
 // CART SYSTEM
 
 // update cart count in navbar
